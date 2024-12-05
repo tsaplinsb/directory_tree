@@ -3,7 +3,7 @@
 # Script to generate a file tree with markdown links for README.md
 
 OUTPUT_FILE="FILE_TREE.md"  # Name of the output file
-BASE_DIR=${1:-.}           # Directory to scan (default: current directory)
+BASE_DIR=${1:-.}            # Directory to scan (default: current directory)
 
 # Create or clear the output file
 echo "# File Tree" > "$OUTPUT_FILE"
@@ -32,11 +32,12 @@ generate_tree() {
       local new_prefix="$prefix│   "
     fi
 
+    # Adding Markdown list item with proper formatting
     if [ -d "$item" ]; then
-      echo "$prefix$branch 📁 **[$name]($url_name)**" >> "$OUTPUT_FILE"
+      echo "$prefix* 📁 **[$name]($url_name)**" >> "$OUTPUT_FILE"
       generate_tree "$item" "$new_prefix" # Recurse into subdirectories
     else
-      echo "$prefix$branch 📄 [$name]($url_name)" >> "$OUTPUT_FILE"
+      echo "$prefix* 📄 [$name]($url_name)" >> "$OUTPUT_FILE"
     fi
   done
 }
