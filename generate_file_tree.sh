@@ -23,20 +23,12 @@ generate_tree() {
     # Replace spaces with %20 for URLs
     local url_name=${item// /%20}
 
-    # Choose branch character ├── or └──
-    if [ "$is_last" -eq 1 ]; then
-      local branch="└──"
-      local new_prefix="$prefix    "
-    else
-      local branch="├──"
-      local new_prefix="$prefix│   "
-    fi
-
-    # Adding Markdown list item with proper formatting
+    # If it's a directory, list it with a "📁" icon
     if [ -d "$item" ]; then
       echo "$prefix* 📁 **[$name]($url_name)**" >> "$OUTPUT_FILE"
-      generate_tree "$item" "$new_prefix" # Recurse into subdirectories
+      generate_tree "$item" "$prefix    " # Recurse into subdirectories with more spaces for indentation
     else
+      # If it's a file, list it with a "📄" icon
       echo "$prefix* 📄 [$name]($url_name)" >> "$OUTPUT_FILE"
     fi
   done
